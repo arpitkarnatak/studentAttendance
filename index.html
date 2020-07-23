@@ -1,0 +1,128 @@
+<!-- To-Do List implemented using jQuery -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8" />
+	<link rel="stylesheet"
+		href=
+"https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+	<script src=
+"https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js">
+</script>
+	<script src=
+"https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js">
+</script>
+	<script src="https://code.jquery.com/jquery-3.4.1.js"
+			integrity=
+			"sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+			crossorigin="anonymous"></script>
+
+	<style>
+		.container {
+			width: 80%;
+			height: auto;
+		}
+
+		.foot {
+			position: fixed;
+			left: 10%;
+			bottom: 0;
+			width: 80%;
+			text-align: center;
+		}
+	</style>
+
+</head>
+
+<body>
+	<center>
+
+		<div class="foot">
+			<div class="row">
+				<div class="col-sm-1">  </div>
+				<div class="col-sm-10">
+					<!-- Input for tasks -->
+					<div class="input-group">
+						<input type="text"
+							class="form-control"
+							placeholder="Student Name"
+							id="text">
+						<div class="input-group-btn">
+							<button class="btn btn-success">
+							<i class="glyphicon glyphicon-plus">
+							</i></button>
+						</div>
+					</div>
+					<br>
+					<br>
+				</div>
+			</div>
+		</div>
+
+		<br>
+		<h2 class="text text-success">Students Present</h2>
+		<br>
+
+		<div class="container">
+		</div>
+
+	</center>
+
+
+	        <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js@1.0.0-beta.34/dist/web3.min.js"></script>
+
+	<script>
+	$(document).ready(function() {
+
+		web3 = new Web3(web3.currentProvider);
+
+		abi = [{
+	"constant": false,
+	"inputs": [
+		{
+			"name": "name",
+			"type": "string"
+		}
+	],
+	"name": "StudentCame",
+	"outputs": [
+		{
+			"name": "",
+			"type": "string"
+		}
+	],
+	"payable": false,
+	"stateMutability": "nonpayable",
+	"type": "function"
+}];
+		ad = ; //Enter the address of smart contract  within quotes
+		contract = new web3.eth.Contract(abi,ad);
+	})
+
+
+		$('.btn-success').click(function() {
+
+				var x = $('.container').html();
+
+			web3.eth.getAccounts().then(function(accounts){
+				var acc = accounts[0];
+				return contract.methods.StudentCame(x).send({from: acc})
+			}).then(function(x){
+
+					var p = $('.container').html();
+
+					var today = new Date;
+				var y =
+	`<div class="alert alert-success alert-dismissible fade in">
+<a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+					` + $('#text').val() + " arrived at time " + today.getHours() + ":" + today.getMinutes()  + `</div>`;
+				$('.container').html(p+y);
+				$('#text').val("");
+			})
+		})</script>
+
+
+</body>
+
+</html>
